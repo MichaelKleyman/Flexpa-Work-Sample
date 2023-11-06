@@ -1,3 +1,4 @@
+import { notDeepEqual } from "assert";
 import express, { Request, Response, Router, NextFunction } from "express";
 
 const router: Router = express.Router();
@@ -21,7 +22,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { public_token } = req.body;
 
-    const request = await fetch(
+    const exchangeRequest = await fetch(
       `${process.env.FLEXPA_PUBLIC_API_BASE_URL}/link/exchange`,
       {
         method: "POST",
@@ -36,9 +37,9 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     );
 
     const { access_token: accessToken, expires_in: expiresIn } =
-      await request.json();
+      await exchangeRequest.json();
 
-    const requestTwo = await fetch(
+    const introspectRequest = await fetch(
       `${process.env.FLEXPA_PUBLIC_API_BASE_URL}/link/introspect`,
       {
         headers: {
@@ -48,16 +49,16 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
       }
     );
 
-    const { jti, iat, sub, exp, endpoint } = await requestTwo.json();
+    const { endpoint } = await introspectRequest.json();
 
     let searchResponse = await fetchAgain(accessToken);
 
     while (searchResponse.resourceType === "OperationOutcome") {
       searchResponse = await fetchAgain(accessToken);
     }
-    
+
     if (searchResponse) {
-      res.send({ searchResponse });
+      res.send({ searchResponse, providerLabel: endpoint.label[0] });
     }
   } catch (error) {
     console.log(error);
