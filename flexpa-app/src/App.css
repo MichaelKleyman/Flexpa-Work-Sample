@@ -41,6 +41,11 @@
   font-weight: 600;
 }
 
+.resourceType {
+  text-align: center;
+  text-decoration: underline;
+}
+
 .loader,
 .loader:before,
 .loader:after {
