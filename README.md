@@ -15,9 +15,7 @@ Follow the Flexpa Link guide to add Flexpa Link to a React frontend to start the
 Exchange the public_token for an access_token in a backend to complete the authorization
 Use the Flexpa API with that access_token to request an ExplanationOfBenefit resource from a payer test server (you can find test credentials in our test mode guide)
 Make sure to opt-in to our improved API experience with the X-Flexpa-Raw header.
-Create a component to display some information from the ExplanationOfBenefit in the frontend
-Publish your source to a public repository (e.g. on Github) and email the link to hiring@flexpa.com
-For inspiration, and in case you get stuck, you can find a complete working example application in our Quickstart guide. We strongly recommend not just submitting a fork of this repository or a PR to that repo.
+Create a component to display some information from the ExplanationOfBenefit in the frontend.
 
 ## Installation
 Open two terminals
