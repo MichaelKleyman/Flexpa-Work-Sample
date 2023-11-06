@@ -76,46 +76,6 @@ function App() {
           </div>
         </div>
       )}
-
-      {/* {!resource || isLoading ? (
-        <div className={`${!isLoading ? "hidden" : "visible"}`}>
-          <span className='loader'></span>
-        </div>
-      ) : (
-        <div className='container'>
-          <h2>Information has been successfully fetched</h2>
-          <div className='resources'>
-            {resource?.entry?.map((elem: any, i: number) => (
-              <div key={i} className='resource'>
-                <p>
-                  <span className='label'>Insurance:</span>{" "}
-                  {elem.resource.insurer?.display}
-                </p>
-                <p>
-                  <span className='label'>Provider: </span>
-                  {elem.resource.provider.display}
-                </p>
-                {elem.resource.prescription && (
-                  <p>
-                    <span className='label'>Prescription: </span>
-                    {elem.resource.prescription.display}
-                  </p>
-                )}
-                <div>
-                  <span className='label'>Total Spending: </span>
-                  <ul>
-                    {elem.resource.total.map((innerElem: any, j: number) => (
-                      <li key={j}>
-                        {innerElem.amount.value} {innerElem.amount.currency}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )} */}
     </>
   );
 }
