@@ -5,7 +5,7 @@ import "./App.css";
 import { Bundle } from "fhir";
 
 function App() {
-  const [resource, setResource] = useState<Bundle>();
+  const [resource, setResource] = useState<Bundle | null>();
   const [isLoading, setLoading] = useState<boolean>(false);
 
   FlexpaLink.create({
@@ -14,6 +14,7 @@ function App() {
       let x!: Response;
       try {
         setLoading(true);
+        setResource(null);
         x = await fetch("http://localhost:3001", {
           method: "POST",
           headers: {
@@ -37,7 +38,9 @@ function App() {
       <button onClick={() => FlexpaLink.open()}>
         Connect your health data
       </button>
+
       <div className={`${!isLoading ? "hidden" : "visible"}`}>
+        <p>Requesting ExplanationOfBenefit Resource from payer test server</p>
         <span className='loader'></span>
       </div>
 
@@ -64,7 +67,7 @@ function App() {
                 <div>
                   <span className='label'>Total Spending: </span>
                   <ul>
-                    {elem.resource.total.map((innerElem: any, j: number) => (
+                    {elem.resource.total?.map((innerElem: any, j: number) => (
                       <li key={j}>
                         {innerElem.amount.value} {innerElem.amount.currency}
                       </li>
