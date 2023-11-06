@@ -22,7 +22,7 @@ For inspiration, and in case you get stuck, you can find a complete working exam
 ## Installation
 Open two terminals
 
-Change directories into felxpa-app and server in each terminal
+Change directories into flexpa-app and server in each terminal
 
 ```bash
 cd flexpa-app
