@@ -6,6 +6,7 @@ import { Bundle } from "fhir";
 
 function App() {
   const [resource, setResource] = useState<Bundle | null>();
+  const [insuranceProvider, setInsuranceProvider] = useState<string>();
   const [isLoading, setLoading] = useState<boolean>(false);
 
   FlexpaLink.create({
@@ -27,8 +28,9 @@ function App() {
       } catch (error) {
         console.log("Error fetching the access token: ", error);
       }
-      const { searchResponse } = await x.json();
+      const { searchResponse, providerLabel } = await x.json();
       setResource(searchResponse);
+      setInsuranceProvider(providerLabel);
       setLoading(false);
     },
   });
@@ -48,14 +50,14 @@ function App() {
         <div className='container'>
           <h2>Information has been successfully fetched</h2>
           <div className='resources'>
-            {resource?.entry?.[0].resource.identifier?.[0].system ===
-            "https://developer.cigna.com" ? (
+            {insuranceProvider === "Cigna" ? (
               <div>
                 {resource?.entry?.map((elem: any, i: number) => (
                   <div key={i} className='resource'>
                     <p className='resourceType'>{elem.resource.resourceType}</p>
                     <p>
-                      <span className='label'>Insurance: </span>Cigna
+                      <span className='label'>Insurance: </span>
+                      {insuranceProvider}
                     </p>
                     {elem.resource.billablePeriod && (
                       <div>
@@ -79,9 +81,7 @@ function App() {
                   <p className='resourceType'>{elem.resource.resourceType}</p>
                   <p>
                     <span className='label'>Insurance:</span>{" "}
-                    {elem.resource.insurer?.display
-                      ? elem.resource.insurer?.display
-                      : "Insurance name not found"}
+                    {insuranceProvider}
                   </p>
                   <p>
                     <span className='label'>Provider: </span>
